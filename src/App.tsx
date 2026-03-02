@@ -88,15 +88,15 @@ export default function App() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success) {
         setIsLoggedIn(true);
         setView('dashboard');
         setError('');
       } else {
         setError(data.message || 'Code incorrect');
       }
-    } catch (err) {
-      setError('Erreur serveur. Veuillez réessayer.');
+    } catch (err: any) {
+      setError(`Erreur: ${err.message || 'Problème de connexion au serveur'}`);
     }
   };
 

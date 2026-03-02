@@ -1,6 +1,5 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import Database from "better-sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -11,22 +10,12 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Initialize Database
-  const db = new Database("database.db");
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pseudo TEXT UNIQUE,
-      password TEXT
-    )
-  `);
-
-  // Insert default users if not exists
-  const insertUser = db.prepare("INSERT OR IGNORE INTO users (pseudo, password) VALUES (?, ?)");
-  insertUser.run("layi", "1212");
-  insertUser.run("samir", "1210");
-
   app.use(express.json());
+
+  // Health check
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok" });
+  });
 
   // API routes
   app.post("/api/login", (req, res) => {
