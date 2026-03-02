@@ -30,13 +30,12 @@ async function startServer() {
 
   // API routes
   app.post("/api/login", (req, res) => {
-    const { pseudo, password } = req.body;
-    const user = db.prepare("SELECT * FROM users WHERE pseudo = ? AND password = ?").get(pseudo, password);
+    const { code } = req.body;
     
-    if (user) {
-      res.json({ success: true, user: { pseudo: user.pseudo } });
+    if (code === "1212") {
+      res.json({ success: true });
     } else {
-      res.status(401).json({ success: false, message: "Pseudo ou mot de passe incorrect" });
+      res.status(401).json({ success: false, message: "Code d'accès incorrect" });
     }
   });
 

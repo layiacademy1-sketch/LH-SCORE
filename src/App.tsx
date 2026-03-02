@@ -62,8 +62,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<View>('landing');
   const [activeTab, setActiveTab] = useState<Tab>('pronostics');
-  const [pseudo, setPseudo] = useState('');
-  const [password, setPassword] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [error, setError] = useState('');
   const [investAmount, setInvestAmount] = useState(500);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -84,7 +83,7 @@ export default function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pseudo, password }),
+        body: JSON.stringify({ code: accessCode }),
       });
 
       const data = await response.json();
@@ -94,7 +93,7 @@ export default function App() {
         setView('dashboard');
         setError('');
       } else {
-        setError(data.message || 'Erreur de connexion');
+        setError(data.message || 'Code incorrect');
       }
     } catch (err) {
       setError('Erreur serveur. Veuillez réessayer.');
@@ -139,10 +138,8 @@ export default function App() {
               <LoginPage 
                 key="login" 
                 setView={setView} 
-                pseudo={pseudo}
-                setPseudo={setPseudo}
-                password={password}
-                setPassword={setPassword}
+                accessCode={accessCode}
+                setAccessCode={setAccessCode}
                 handleLogin={handleLogin}
                 error={error}
               />
@@ -418,13 +415,11 @@ const RegisterPage = ({ setView }: { setView: (v: View) => void, key?: string })
 );
 
 const LoginPage = ({ 
-  setView, pseudo, setPseudo, password, setPassword, handleLogin, error 
+  setView, accessCode, setAccessCode, handleLogin, error 
 }: { 
   setView: (v: View) => void;
-  pseudo: string;
-  setPseudo: (s: string) => void;
-  password: string;
-  setPassword: (s: string) => void;
+  accessCode: string;
+  setAccessCode: (s: string) => void;
   handleLogin: () => void | Promise<void>;
   error: string;
   key?: string;
@@ -440,34 +435,27 @@ const LoginPage = ({
           <Lock className="text-primary" size={32} />
         </div>
         <h2 className="text-2xl font-bold text-white">Accès VIP</h2>
-        <p className="text-zinc-500 text-sm">Entrez vos identifiants</p>
+        <p className="text-zinc-500 text-sm">Entrez votre code d'accès</p>
       </div>
 
       <div className="space-y-4">
         <div>
           <input
-            type="text"
-            value={pseudo}
-            onChange={(e) => setPseudo(e.target.value)}
-            placeholder="Pseudo"
-            className="w-full bg-black border border-white/10 rounded-2xl py-4 px-6 text-white text-center text-lg focus:outline-none focus:border-primary transition-colors mb-4"
-          />
-          <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Mot de passe"
-            className="w-full bg-black border border-white/10 rounded-2xl py-4 px-6 text-white text-center text-lg tracking-widest focus:outline-none focus:border-primary transition-colors"
+            value={accessCode}
+            onChange={(e) => setAccessCode(e.target.value)}
+            placeholder="Code d'accès"
+            className="w-full bg-black border border-white/10 rounded-2xl py-4 px-6 text-white text-center text-2xl tracking-[0.5em] font-black focus:outline-none focus:border-primary transition-colors"
             onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
-          {error && <p className="text-red-500 text-xs mt-2 text-center font-medium">{error}</p>}
+          {error && <p className="text-red-500 text-xs mt-4 text-center font-medium">{error}</p>}
         </div>
 
         <button
           onClick={handleLogin}
           className="w-full bg-primary hover:bg-primary-dark text-black font-bold py-4 rounded-2xl transition-colors shadow-lg shadow-primary/20"
         >
-          Se connecter
+          Accéder au VIP
         </button>
 
         <button 
