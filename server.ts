@@ -21,9 +21,10 @@ async function startServer() {
     )
   `);
 
-  // Insert default user if not exists
+  // Insert default users if not exists
   const insertUser = db.prepare("INSERT OR IGNORE INTO users (pseudo, password) VALUES (?, ?)");
   insertUser.run("layi", "1212");
+  insertUser.run("samir", "1210");
 
   app.use(express.json());
 

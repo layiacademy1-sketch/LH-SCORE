@@ -579,17 +579,15 @@ const Dashboard = ({
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <Gift className="text-primary" size={20} /> Jeux-Concours
             </h3>
-            <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-[2rem] p-8 text-center relative overflow-hidden border border-white/10">
-              <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
-              <Gift className="mx-auto text-primary mb-4" size={48} />
-              <h4 className="text-2xl font-bold text-white mb-2">Grand Tirage au Sort</h4>
-              <p className="text-zinc-400 mb-6">Gagnez un maillot dédicacé de votre équipe favorite !</p>
-              <div className="bg-black/50 py-3 rounded-2xl mb-6 font-mono text-primary font-bold">
-                PROCHAIN TIRAGE : 48:12:05
+            <div className="bg-zinc-900/50 border border-white/10 rounded-[2rem] p-12 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="text-primary" size={40} />
               </div>
-              <button className="w-full py-4 bg-primary text-black font-bold rounded-2xl hover:bg-primary-dark transition-colors">
-                Participer gratuitement
-              </button>
+              <h4 className="text-2xl font-bold text-white mb-2 italic">Bientôt disponible</h4>
+              <p className="text-zinc-500 max-w-xs mx-auto">
+                Nos jeux-concours exclusifs arrivent très prochainement. Restez connectés pour ne rien manquer !
+              </p>
             </div>
           </motion.div>
         )}
@@ -602,79 +600,27 @@ const Dashboard = ({
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
-            {/* Stats Header */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-zinc-900/50 border border-white/10 p-5 rounded-3xl">
-                <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-widest mb-1">Montant investi</p>
-                <p className="text-2xl font-black text-white">2000 €</p>
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Zap className="text-primary" size={20} /> AUTOMISE
+            </h3>
+            
+            <div className="bg-zinc-900/50 border border-white/10 rounded-[2.5rem] p-12 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Activity className="text-primary" size={40} />
               </div>
-              <div className="bg-zinc-900/50 border border-white/10 p-5 rounded-3xl">
-                <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-widest mb-1">Montant généré</p>
-                <p className="text-2xl font-black text-primary">+ 70 €</p>
-              </div>
-            </div>
-
-            {/* Investment Controls */}
-            <div className="bg-zinc-900/50 border border-white/10 p-6 rounded-[2.5rem]">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <Zap className="text-primary" size={20} /> AUTOMISE Invest
-              </h3>
+              <h4 className="text-2xl font-bold text-white mb-2 italic">Bientôt disponible</h4>
+              <p className="text-zinc-500 max-w-xs mx-auto">
+                Le système d'investissement AUTOMISE est en cours de maintenance et sera de retour très bientôt.
+              </p>
               
-              <div className="mb-8">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-zinc-400 font-medium">Montant à investir</span>
-                  <span className="text-3xl font-black text-primary">{investAmount} €</span>
-                </div>
-                <input
-                  type="range"
-                  min="100"
-                  max="1000"
-                  step="5"
-                  value={investAmount}
-                  onChange={(e) => setInvestAmount(parseInt(e.target.value))}
-                  className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-primary"
-                />
-                <div className="flex justify-between mt-2 text-[10px] text-zinc-600 font-bold">
-                  <span>100 €</span>
-                  <span>1000 €</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 gap-3">
+              <div className="mt-8 pt-8 border-t border-white/5">
                 <button 
-                  onClick={handleInvest}
-                  className="w-full py-4 bg-primary text-black font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
-                >
-                  <Wallet size={20} /> Investir via WhatsApp
-                </button>
-                <button 
-                  onClick={handleWithdraw}
+                  onClick={() => window.open('https://wa.me/33757828250?text=Bonjour,%20je%20souhaite%20avoir%20plus%20d\'informations%20sur%20AUTOMISE.', '_blank')}
                   className="w-full py-4 bg-zinc-800 text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-zinc-700 transition-colors"
                 >
-                  <MessageCircle size={20} /> Demander un retrait
+                  <MessageCircle size={20} /> Plus d'infos sur WhatsApp
                 </button>
-              </div>
-            </div>
-
-            {/* History */}
-            <div>
-              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <History className="text-zinc-500" size={18} /> Historique
-              </h3>
-              <div className="space-y-3">
-                {MOCK_INVESTMENTS.map((inv) => (
-                  <div key={inv.id} className="bg-zinc-900/30 border border-white/5 p-4 rounded-2xl flex justify-between items-center">
-                    <div>
-                      <p className="font-bold text-white">{inv.amount} €</p>
-                      <p className="text-zinc-500 text-xs">{inv.date}</p>
-                    </div>
-                    <div className={`text-[10px] font-bold px-2 py-1 rounded-lg uppercase ${
-                      inv.status === 'Actif' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-zinc-800 text-zinc-500'
-                    }`}>
-                      {inv.status}
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </motion.div>
